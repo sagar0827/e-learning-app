@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate') %>
+
+<h2 class="mb-4 text-center">
+    Uploaded Notes 📚
+</h2>
+
+<div class="row">
+<% if(notes.length === 0){ %>
+
+    <h4>No Notes Uploaded Yet</h4>
+
+<% } %>
+    <% notes.forEach(note => { %>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <h4>
+                        <%= note.title %>
+                    </h4>
+
+                    <p class="text-muted">
+                        <%= note.subject %>
+                    </p>
+
+                    <p>
+                        <%= note.description %>
+                    </p>
+
+                    <a
+                    href="/<%= note.file %>"
+                    target="_blank"
+                    class="btn btn-dark">
+
+                        View PDF
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+</div>

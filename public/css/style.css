@@ -1,0 +1,50 @@
+.nav-link:hover{
+    color: #0d6efd !important;
+}
+
+body{
+    background-color: #f5f7fa;
+}
+
+.navbar-brand{
+    letter-spacing: 1px;
+}
+
+.card{
+    margin-top: 60px;
+}
+
+.form-control{
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btn{
+    border-radius: 10px;
+}
+
+.hero-section{
+    background: linear-gradient(to right, #eef2ff, #f8f9fa);
+    border-radius: 20px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    padding: 40px;
+}
+
+.subject-card{
+    background-color: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.subject-card:hover{
+    transform: translateY(-5px);
+}
+
+.subjects-section{
+    margin-top: 100px;
+}
