@@ -61,7 +61,7 @@
 
             <!-- Right Buttons -->
             <div class="d-flex gap-2">
-
+  <% if(!currUser)  { %>
                 <a href="/login" class="btn btn-outline-light">
                     Login
                 </a>
@@ -69,6 +69,14 @@
                 <a href="/register" class="btn btn-primary">
                     Register
                 </a>
+                <%} else { %>
+                    <span class="text-light mt-2">
+                        Welcome <%=currUser.username %>
+                    </span>
+                    <a href="/logout" class="btn btn-danger">
+                        Logout
+                    </a>
+                    <%} %>
 
             </div>
 
