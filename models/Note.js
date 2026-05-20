@@ -18,11 +18,18 @@ const noteSchema = new Schema({
     type: String,
     required: true
 },
-uploadedBy: {
-    type: Schema.Types.ObjectId,
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     
   }
 });
 
-module.exports = mongoose.model('Note', noteSchema);
+
+
+const Note = mongoose.models.Note || mongoose.model("Note", noteSchema);
+
+module.exports = Note;
+
+
+ 
