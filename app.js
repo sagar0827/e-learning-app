@@ -1,16 +1,17 @@
-require("dotenv").config();
+require('dotenv').config();
 
 const express = require('express');
+const app = express();
 const ejs = require('ejs');
 const mongoose = require('mongoose');
+const path = require("path");
 const ejsMate = require('ejs-mate');
 const session = require("express-session");
 const flash = require("connect-flash");
-const Note = require("./models/Note");
-const User = require("./models/User");
 const passport = require("passport")
 const LocalStrategy = require("passport-local");
-
+const Note = require("./models/Note");
+const User = require("./models/User");
 
 
 
@@ -27,15 +28,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
-const app = express();
-app.engine('ejs', ejsMate);
-
-const path = require('path');
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
+app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static("uploads"));
 // Middleware
@@ -63,11 +60,11 @@ passport.deserializeUser(User.deserializeUser());
 
 
 // Connect to MongoDB
-//  mongoose.connect(process.env.MONGO_URL).then(() => {
-//   console.log('Connected to MongoDB');
-// }).catch(err => {
-//   console.error('Error connecting to MongoDB', err);
-// });
+ mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Error connecting to MongoDB', err);
+});
 
 //Flass Message Middleware
 app.use((req,res,next)=>{
@@ -88,7 +85,7 @@ app.use("/", noteRoutes);
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });
