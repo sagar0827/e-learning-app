@@ -12,7 +12,7 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local");
 const Note = require("./models/Note");
 const User = require("./models/User");
-
+const methodOverride = require("method-override");
 
 
 //multer for file uploads
@@ -32,6 +32,7 @@ app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static("uploads"));

@@ -74,13 +74,12 @@ try{
         username,
         email
     });
-
     const registeredUser = await User.register(newUser, password);
     req.login(registeredUser,(err)=>{
         if(err){
             return next(err);
         }
-        req.flash("success", "Registered Successfully");
+        req.flash("success", "Registered Successfully!");
         res.redirect("/");
     });
 }catch(err){

@@ -1,50 +1,55 @@
 <% layout('layouts/boilerplate') %>
 
-<h2 class="mb-4 text-center">
-    Uploaded Notes 📚
-</h2>
+    <h2 class="mb-4 text-center">
+        Uploaded Notes 📚
+    </h2>
 
-<div class="row">
-<% if(notes.length === 0){ %>
+    <div class="row">
+        <% if(notes.length===0){ %>
 
-    <h4>No Notes Uploaded Yet</h4>
+            <h4>No Notes Uploaded Yet</h4>
 
-<% } %>
-    <% notes.forEach(note => { %>
+            <% } %>
+                <% notes.forEach(note=> { %>
 
-        <div class="col-md-4 mb-4">
+                    <div class="col-md-4 mb-4">
 
-            <div class="card shadow-sm border-0 rounded-4 h-100">
+                        <div class="card shadow-sm border-0 rounded-4 h-100">
 
-                <div class="card-body">
+                            <div class="card-body">
 
-                    <h4>
-                        <%= note.title %>
-                    </h4>
+                                <h4>
+                                    <%= note.title %>
+                                </h4>
 
-                    <p class="text-muted">
-                        <%= note.subject %>
-                    </p>
+                                <p class="text-muted">
+                                    <%= note.subject %>
+                                </p>
 
-                    <p>
-                        <%= note.description %>
-                    </p>
+                                <p>
+                                    <%= note.description %>
+                                </p>
+                                <% if(currUser) { %>
+                                    <a href="/<%= note.file %>" target="_blank" class="btn btn-dark">
 
-                    <a
-                    href="/<%= note.file %>"
-                    target="_blank"
-                    class="btn btn-dark">
+                                        View PDF
 
-                        View PDF
+                                    </a>
+                                    <% } %>
 
-                    </a>
+                                        <form action="/notes/<%= note._id %>?_method=DELETE" method="POST">
 
-                </div>
+                                            <button class="btn btn-danger">
+                                                Delete Note
+                                            </button>
 
-            </div>
+                                        </form>
+                            </div>
 
-        </div>
+                        </div>
 
-    <% }) %>
+                    </div>
 
-</div>
+                    <% }) %>
+
+    </div>

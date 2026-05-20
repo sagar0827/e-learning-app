@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const {isLoggedIn , isOwner } = require("../middleware");
 const multer = require("multer");
 const Note = require("../models/Note");
 
@@ -20,7 +20,7 @@ router.get("/upload", (req, res) => {
 });
 
 router.post(
-    "/upload",
+    "/upload",isLoggedIn,
     upload.single("file"),
 
     async (req, res) => {
@@ -33,7 +33,8 @@ router.post(
             subject,
             description,
 
-            file: req.file.path
+            file: req.file.path,
+          owner : req.user._id
 
         });
 
@@ -45,13 +46,31 @@ router.post(
 );
 
 // SHOW NOTES
-router.get("/notes", async (req, res) => {
+router.get("/notes",isLoggedIn, async (req, res) => {
 
-    const notes = await Note.find();
+    const notes = await Note.find({});
 
     res.render("notes", { notes });
 
 });
+
+
+// DELETE NOTES
+router.delete("/notes/:id", isLoggedIn, isOwner, async(req, res) => {
+
+    let { id } = req.params;
+
+    await Note.findByIdAndDelete(id);
+
+    req.flash("success", "Note Deleted Successfully!");
+
+    res.redirect("/notes");
+
+});
+
+
+
+
 
 
 module.exports = router;
