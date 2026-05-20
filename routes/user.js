@@ -24,7 +24,6 @@ router.post(
     async (req, res) => {
 
         req.flash("success", "Welcome back!");
-
         res.redirect("/");
     }
 );
