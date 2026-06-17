@@ -48,3 +48,17 @@ body{
 .subjects-section{
     margin-top: 100px;
 }
+
+body.dark{
+
+    background:#121212;
+
+    color:white;
+}
+
+.dark .card{
+
+    background:#1f1f1f;
+
+    color:white;
+}

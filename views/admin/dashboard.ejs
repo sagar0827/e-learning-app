@@ -1,0 +1,178 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="container mt-4">
+        <!-- Dashboard Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+
+                <div class="card shadow border-0 text-center">
+
+                    <div class="card-body">
+
+                        <h5 class="text-muted">
+                            Total Users
+                        </h5>
+
+                        <h2 class="fw-bold text-primary">
+                            <%= users %>
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-4">
+
+                <div class="card shadow border-0 text-center">
+
+                    <div class="card-body">
+
+                        <h5 class="text-muted">
+                            Total Notes
+                        </h5>
+
+                        <h2 class="fw-bold text-success">
+                            <%= notes %>
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-4">
+
+                <div class="card shadow border-0 text-center">
+
+                    <div class="card-body">
+
+                        <h5 class="text-muted">
+                            Total Admins
+                        </h5>
+
+                        <h2 class="fw-bold text-warning">
+                            <%= admins.length %>
+                        </h2>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Manage User Button -->
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            
+            <a href="/admin/users" class="btn btn-primary">
+                Manage Users
+            </a>
+
+            <a href="/admin/notes" class="btn btn-success">
+                Manage Notes
+            </a>
+
+        </div>
+
+        <!-- Admin Table -->
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    Admins Management
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+
+
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                            <% admins.forEach(admin=> { %>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
+                                                style="width: 40px; height: 40px;">
+                                                <%= admin.username.charAt(0).toUpperCase() %>
+                                            </div>
+                                            <div>
+                                                <%= admin.username %>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                    <td>
+                                        <%= admin.email %>
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge bg-success px-3 py-2">
+                                            <%= admin.role %>
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+                                        <% if(admin._id.toString() !==currUser._id.toString()){ %>
+
+
+                                            <form action="/admin/users/<%= admin._id %>/remove-admin" method="POST">
+
+
+                                                <button class="btn btn-warning btn-sm">
+
+                                                    <i class="bi bi-person-dash"></i>
+                                                    Remove Admin
+                                                </button>
+
+
+                                            </form>
+
+
+                                            <% }else{ %>
+
+                                                <span class="text-muted">
+                                                    You
+                                                </span>
+
+                                                <% } %>
+
+
+                                    </td>
+                                </tr>
+                                <% }) %>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

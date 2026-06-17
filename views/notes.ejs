@@ -1,13 +1,19 @@
 <% layout('layouts/boilerplate') %>
 
     <h2 class="mb-4 text-center">
-        Uploaded Notes 📚
+        All Notes 📚
     </h2>
+ <form class="d-flex mb-4" method="GET" action="/notes">
+    <input class="form-control me-2" type="text" placeholder="Search Notes..." name="search" value="<%= typeof search !== 'undefined' ? search : '' %>">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+ </form>
+ <a href="/notes/upload" class="btn btn-primary mb-4">
+    Upload New Notes </a>
 
     <div class="row">
         <% if(notes.length===0){ %>
 
-            <h4>No Notes Uploaded Yet</h4>
+            <div class="alert alert-warning">No Notes Found</div>
 
             <% } %>
                 <% notes.forEach(note=> { %>
@@ -18,11 +24,11 @@
 
                             <div class="card-body">
 
-                                <h4>
+                                <h5 class="card-title">
                                     <%= note.title %>
-                                </h4>
+                                </h5>
 
-                                <p class="text-muted">
+                                <p class="card-text">
                                     <%= note.subject %>
                                 </p>
 
@@ -30,10 +36,8 @@
                                     <%= note.description %>
                                 </p>
                                 <% if(currUser) { %>
-                                    <a href="/<%= note.file %>" target="_blank" class="btn btn-dark">
-
+                                    <a href="/<%= note.file %>" target="_blank" class="btn btn-primary ">
                                         View PDF
-
                                     </a>
                                     <% } %>
 

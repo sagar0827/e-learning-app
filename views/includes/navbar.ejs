@@ -1,5 +1,4 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-
     <div class="container">
 
         <!-- Logo -->
@@ -8,11 +7,7 @@
         </a>
 
         <!-- Mobile Toggle -->
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
 
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,14 +19,8 @@
             <ul class="navbar-nav me-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/notes">
-                        Notes
+                    <a class="nav-link" href="/dashboard">
+                        Dashboard
                     </a>
                 </li>
 
@@ -42,45 +31,96 @@
                 </li>
 
                 <li class="nav-item">
-                    <% if(currUser){ %>
-                    <a class="nav-link" href="/upload">
-                        Upload Notes
+                    <% if( typeof currUser !== 'undefined' && currUser ){ %>  
+                        <a class="nav-link" href="/notes">
+                        Notes
                     </a>
-                    <% } %>
+                </li>
+            
+                <li class="nav-item">
+                    
+                        <a class="nav-link" href="/notes/upload">
+                            Upload Notes
+                        </a>
+                        <% } %>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">
+                        Profile
+                    </a>
                 </li>
 
             </ul>
 
-            <!-- Search Bar -->
+            <!-- Search Bar
             <form class="d-flex me-3">
 
-                <input
-                    class="form-control"
-                    type="search"
-                    placeholder="Search Notes">
+                <input class="form-control" type="search" placeholder="Search Notes">
 
             </form>
 
             <!-- Right Buttons -->
-            <div class="d-flex gap-2">
-  <% if(!currUser)  { %>
-                <a href="/login" class="btn btn-outline-light">
-                    Login
-                </a>
-
-                <a href="/register" class="btn btn-primary">
-                    Register
-                </a>
-                <%} else { %>
-                    <span class="text-light mt-2">
-                        Welcome <%=currUser.username %>
-                    </span>
-                    <a href="/logout" class="btn btn-danger">
-                        Logout
+            <!-- <div class="d-flex gap-2">
+                <% if(!currUser) { %>
+                    <a href="/login" class="btn btn-outline-light">
+                        Login
                     </a>
-                    <%} %>
 
-            </div>
+                    <a href="/register" class="btn btn-primary">
+                        Register
+                    </a>
+                    <%} else { %>
+                        <span class="text-light mt-2">
+                            Welcome <%=currUser.username %>
+                        </span>
+                        <a href="/logout" class="btn btn-danger">
+                            Logout
+                        </a>
+                        <%} %>
+
+            </div> -->
+            <ul class="navbar-nav">
+
+                <% if(currUser){ %>
+
+                    <% if(currUser.role==="admin" ){ %>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="/admin/dashboard">
+                                Admin Dashboard 
+                            </a>
+                        </li>
+
+                        <% } %>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="/logout">
+                                    Logout
+                                </a>
+                            </li>
+
+                            <% } else { %>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">
+                                        Login
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/register">
+                                        Register
+                                    </a>
+                                </li>
+
+                                <% } %>
+
+            </ul>
+
+            <button onclick="toggleTheme()" class="btn btn-warning">
+                Dark Mode
+            </button>
 
         </div>
     </div>

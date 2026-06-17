@@ -1,0 +1,123 @@
+
+<div class="container mt-4">
+
+    <h2 class="fw-bold mb-4">
+        Manage Notes
+    </h2>
+
+
+
+    <div class="card shadow border-0">
+
+
+        <div class="card-body">
+
+
+            <div class="table-responsive">
+
+
+                <table class="table table-hover align-middle">
+
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Uploaded By</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                        <% notes.forEach(note=>{ %>
+
+
+                            <tr>
+
+
+                                <td>
+                                    <%= note.title %>
+                                </td>
+
+
+                                <td>
+                                    <%= note.subject %>
+                                </td>
+
+
+                                <td>
+
+                                    <%= note.owner.name %>
+
+                                        <br>
+
+                                        <small class="text-muted">
+                                            <%= note.owner.email %>
+                                        </small>
+
+                                </td>
+
+
+
+                                <td>
+
+
+                                    <a href="/notes/<%= note._id %>" class="btn btn-primary btn-sm">
+
+                                        View
+
+                                    </a>
+
+
+
+                                    <form action="/admin/notes/<%= note._id %>/delete" method="POST" class="d-inline">
+
+
+                                        <button class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Delete this note?')">
+
+                                            Delete
+
+                                        </button>
+
+
+                                    </form>
+
+
+
+                                </td>
+
+
+                            </tr>
+
+
+
+                            <% }) %>
+
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

@@ -18,11 +18,17 @@ const noteSchema = new Schema({
     type: String,
     required: true
 },
-  owner: {
+owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     
-  }
+  },
+  
+createdAt:{
+  type:Date,
+  default:Date.now
+}
+
 });
 
 

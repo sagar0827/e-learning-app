@@ -8,64 +8,13 @@ router.get('/', (req, res) => {
     res.render("dashboard");
 });
 
-router.get('/login', (req, res) => {
-     res.render("login");
-});
-
-// LOGIN PAGE
-router.post(
-    "/login",
-
-    passport.authenticate("local", {
-        failureRedirect: "/login",
-        failureFlash: true,
-    }),
-
-    async (req, res) => {
-
-        req.flash("success", "Welcome back!");
-        res.redirect("/");
-    }
-);
-
-// router.post("/login", async (req, res) => {
-
-//     const { email, password } = req.body;
-
-//     const user = await User.findOne({ email });
-
-//     if(!user){
-//         return res.send("User not found");
-//     }
-
-//     if(user.password !== password){
-//         return res.send("Incorrect Password");
-//     }
-
-//     res.send("Login Successful");
-// });
-
-router.get("/logout", (req, res, next) => {
-
-    req.logout((err) => {
-
-        if (err) {
-            return next(err);
-        }
-
-        req.flash("success", "Logged Out");
-
-        res.redirect("/");
-    });
-
-});
-
-
-// REGISTER Route
+//  Register page
 router.get('/register', (req, res) => {
     res.render("register");
 });
 
+
+//Register User
 router.post("/register", async (req, res) => {
 try{
     const { username, email, password } = req.body;
@@ -80,16 +29,66 @@ try{
             return next(err);
         }
         req.flash("success", "Registered Successfully!");
-        res.redirect("/");
+        res.redirect("/dashboard");
     });
 }catch(err){
 
     req.flash("error",err.message);
     res.redirect("/register");
 }
-    // await newUser.save();
+    
+});
 
-    //res.send("User Registered");
+//Login Page
+router.get('/login', (req, res) => {
+     res.render("login");
+});
+
+// Login User
+router.post(
+    "/login",
+    passport.authenticate("local", {
+        failureRedirect: "/login",
+        failureFlash: "Invalid Username or Password",
+        successRedirect: "/dashboard",
+        successFlash: "Welcome back!"
+    })
+);
+
+// Dashboard
+router.get("/dashboard", (req, res) => {
+    if (!req.isAuthenticated()) {
+        req.flash("error", "You must be logged in to access the dashboard");
+        return res.redirect("/login");
+    }
+
+    res.render("dashboard");
+});
+
+// Logout User
+router.get("/logout", (req, res, next) => {
+
+    req.logout((err) => {
+
+        if (err) {
+            return next(err);
+        }
+
+        req.flash("success", "Logged Out Successfully");
+
+        res.redirect("/");
+    });
+
+});
+
+//Profile Page
+router.get("/profile", (req, res) => {
+    if (!req.isAuthenticated()) {
+        req.flash("error", "You must be logged in to access the profile");
+        return res.redirect("/login");
+    }
+    res.render("profile");  
+
 });
 
 module.exports = router;

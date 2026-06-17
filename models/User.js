@@ -22,7 +22,7 @@
 
 const mongoose = require("mongoose");
 
-const  passportLocalMongoose  = require("passport-local-mongoose").default;
+const passportLocalMongoose = require("passport-local-mongoose").default;
 
 const userSchema = new mongoose.Schema({
 
@@ -31,9 +31,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+     
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
+    }
 
 });
 
 userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User",userSchema );
+module.exports = mongoose.model("User", userSchema);

@@ -13,6 +13,10 @@ const LocalStrategy = require("passport-local");
 const Note = require("./models/Note");
 const User = require("./models/User");
 const methodOverride = require("method-override");
+const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/user");
+const noteRoutes = require("./routes/notes");
+
 
 
 //multer for file uploads
@@ -28,6 +32,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
 
@@ -36,6 +41,8 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static("uploads"));
+
+
 // Middleware
 app.use(express.json());
 
@@ -59,14 +66,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-// Connect to MongoDB
- mongoose.connect(process.env.MONGO_URL).then(() => {
-  console.log('Connected to MongoDB');
-}).catch(err => {
-  console.error('Error connecting to MongoDB', err);
-});
-
 //Flass Message Middleware
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
@@ -75,15 +74,22 @@ app.use((req,res,next)=>{
     next();
 });
 
-// Routes
-const userRoutes = require("./routes/user");
-const noteRoutes = require("./routes/notes");
-
 app.use("/", userRoutes);
-app.use("/", noteRoutes);
- app.get('/videos', (req, res) => {
-  res.render("videos.ejs");
+app.use("/notes", noteRoutes);
+ app.use("/uploads", express.static("uploads"));
+app.use("/admin", adminRoutes);
+
+ app.get('/', (req, res) => {
+  res.render("home");
 });
+
+// Connect to MongoDB
+ mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('Error connecting to MongoDB', err);
+});
+
 
 // Start the server
 

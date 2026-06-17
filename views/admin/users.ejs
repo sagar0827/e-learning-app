@@ -1,0 +1,186 @@
+ <%- layout("layouts/boilerplate") %> 
+
+<!-- <div class="container mt-5">
+
+    <h2 class="mb-4">Manage Users</h2>
+
+    <% if(users.length === 0){ %>
+
+        <div class="alert alert-warning">
+            No Users Found
+        </div>
+    <% } %>
+
+    <% users.forEach(user => { %>
+        <div class="card mb-3">
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    <%= user.username %>
+                </h5>
+
+                <p class="card-text">
+                    Email: <%= user.email %>
+                </p>
+
+                <p class="card-text">
+                    Role:
+                    <strong>
+                        <%= user.role %>
+                    </strong>
+                </p>
+
+                <% if(user.role === "user"){ %>
+                    <form
+                        action="/admin/users/<%= user._id %>/make-admin?_method=PUT"
+                        method="POST">
+                        <button class="btn btn-success">Make Admin</button>
+                    </form>
+                <% } else { %>
+
+                    <form
+                        action="/admin/users/<%= user._id %>/remove-admin?_method=PUT"
+                        method="POST">
+
+                        <button
+                            class="btn btn-warning">Remove Admin
+                        </button>
+                    </form>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+</div> --> 
+
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 fw-bold">
+        Manage Users
+    </h2>
+
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+
+            <table class="table table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <% users.forEach(user => { %>
+
+                    <tr>
+
+                        <td>
+                            <%= user.username %>
+                        </td>
+
+
+                        <td>
+                            <%= user.email %>
+                        </td>
+
+
+                        <td>
+
+                            <% if(user.role === "admin"){ %>
+
+                                <span class="badge bg-success">
+                                    Admin
+                                </span>
+
+                            <% } else { %>
+
+                                <span class="badge bg-primary">
+                                    User
+                                </span>
+
+                            <% } %>
+
+                        </td>
+
+
+                        <td>
+
+
+                            <% if(user.role === "user"){ %>
+
+                            <form action="/admin/users/<%= user._id %>/make-admin"
+                            method="POST"
+                            class="d-inline">
+
+                                <button class="btn btn-success btn-sm">
+                                    Make Admin
+                                </button>
+
+                            </form>
+
+
+                            <% } else { %>
+
+
+                            <form action="/admin/users/<%= user._id %>/remove-admin"
+                            method="POST"
+                            class="d-inline">
+
+                                <button class="btn btn-warning btn-sm">
+                                    Remove Admin
+                                </button>
+
+                            </form>
+
+
+                            <% } %>
+
+
+
+                            <form action="/admin/users/<%= user._id %>/delete"
+                            method="POST"
+                            class="d-inline">
+
+                                <button class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+
+                            </form>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                <% }) %>
+
+
+                </tbody>
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+</div>
