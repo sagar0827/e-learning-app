@@ -1,130 +1,140 @@
- <%- layout("layouts/boilerplate") %> 
+<%- layout("layouts/boilerplate") %>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <h2 class="mb-4 fw-bold">
-        Manage Users
-    </h2>
-
-
-    <div class="card shadow">
-
-        <div class="card-body">
-
-            <table class="table table-hover align-middle">
-
-                <thead class="table-dark">
-
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-
-                </thead>
+        <h2 class="mb-4 fw-bold">
+            Manage Users
+        </h2>
 
 
-                <tbody>
+        <div class="card shadow">
 
-                <% users.forEach(user => { %>
+            <div class="card-body">
 
-                    <tr>
+                <table class="table table-hover align-middle">
 
-                          <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
-                                                style="width: 40px; height: 40px;">
-                                                <%= user.username.charAt(0).toUpperCase() %>
-                                            </div>
-                                            <div>
-                                                <%= user.username %>
-                                            </div>
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <% users.forEach(user => { %>
+
+                            <tr>
+
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3" style="width: 40px; height: 40px;">
+                                            <%= user.username.charAt(0).toUpperCase() %>
                                         </div>
-                                    </td>
+                                        <div>
+                                            <%= user.username %>
+                                        </div>
+                                    </div>
+                                </td>
 
-                        <td>
-                            <%= user.email %>
-                        </td>
+                                <td>
+                                    <%= user.email %>
+                                </td>
 
 
-                        <td>
+                                <td>
 
-                            <% if(user.role === "admin"){ %>
+                                    <% if(user.role === "admin"){ %>
 
-                                <span class="badge bg-success">
-                                    Admin
-                                </span>
+                                        <span class="badge bg-success">
+                                           Admin
+                                           </span>
 
-                            <% } else { %>
+                                        <% } else { %>
 
-                                <span class="badge bg-primary">
+                                            <span class="badge bg-primary">
                                     User
                                 </span>
 
-                            <% } %>
+                                            <% } %>
+                                </td>
+                                <td>
+                                    <% if(user.isOnline){ %>
 
-                        </td>
+                                        <span class="badge bg-success">
+                                            Online
+                                        </span>
 
+                                        <% } else { %>
 
-                        <td>
+                                            <span class="badge bg-secondary">
+                                    Offline
+                                </span>
+                                            <% } %>
+                                </td>
+                                <td>
+                                    <% if(user.role==="user" ){ %>
 
+                                        <form action="/admin/users/<%= user._id %>/make-admin" method="POST" class="d-inline">
 
-                            <% if(user.role === "user"){ %>
-
-                            <form action="/admin/users/<%= user._id %>/make-admin"
-                            method="POST"
-                            class="d-inline">
-
-                                <button class="btn btn-success btn-sm">
+                                            <button class="btn btn-success btn-sm">
                                     Make Admin
                                 </button>
 
-                            </form>
+                                        </form>
 
+                                        <% } else { %>
 
-                            <% } else { %>
+                                            <form action="/admin/users/<%= user._id %>/remove-admin" method="POST" class="d-inline">
 
-
-                            <form action="/admin/users/<%= user._id %>/remove-admin"
-                            method="POST"
-                            class="d-inline">
-
-                                <button class="btn btn-warning btn-sm">
+                                                <button class="btn btn-warning btn-sm">
                                     Remove Admin
                                 </button>
 
-                            </form>
+                                            </form>
 
-                            <% } %>
-                            <form action="/admin/users/<%= user._id %>/delete"
-                            method="POST"
-                            class="d-inline">
+                                            <% } %>
+                                                <form action="/admin/users/<%= user._id %>/delete" method="POST" class="d-inline">
 
-                                <button class="btn btn-danger btn-sm">
+                                                    <button class="btn btn-danger btn-sm">
                                     Delete
                                 </button>
 
-                            </form>
+
+                                                </form>
 
 
-                        </td>
+                                </td>
 
 
-                    </tr>
+
+                            </tr>
 
 
-                <% }) %>
+                            <% }) %>
 
 
-                </tbody>
 
-            </table>
+                    </tbody>
 
+                </table>
+
+
+            </div>
 
         </div>
 
+
     </div>
-
-
-</div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>

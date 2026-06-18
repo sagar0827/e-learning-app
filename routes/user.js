@@ -15,33 +15,33 @@ router.get('/register', (req, res) => {
 
 
 //Register User
-router.post("/register", async (req, res) => {
-try{
-    const { username, email, password } = req.body;
+router.post("/register", async(req, res) => {
+    try {
+        const { username, email, password } = req.body;
 
-    const newUser = new User({
-        username,
-        email
-    });
-    const registeredUser = await User.register(newUser, password);
-    req.login(registeredUser,(err)=>{
-        if(err){
-            return next(err);
-        }
-        req.flash("success", "Registered Successfully!");
-        res.redirect("/dashboard");
-    });
-}catch(err){
+        const newUser = new User({
+            username,
+            email
+        });
+        const registeredUser = await User.register(newUser, password);
+        req.login(registeredUser, (err) => {
+            if (err) {
+                return next(err);
+            }
+            req.flash("success", "Registered Successfully!");
+            res.redirect("/dashboard");
+        });
+    } catch (err) {
 
-    req.flash("error",err.message);
-    res.redirect("/register");
-}
-    
+        req.flash("error", err.message);
+        res.redirect("/register");
+    }
+
 });
 
 //Login Page
 router.get('/login', (req, res) => {
-     res.render("login");
+    res.render("login");
 });
 
 // Login User
@@ -52,8 +52,9 @@ router.post(
         failureFlash: "Invalid Username or Password",
         successRedirect: "/dashboard",
         successFlash: "Welcome back!"
-    })
-);
+    }), async(req, res) => {
+        await User.findByIdAndUpdate(req.user._id, { isOnline: true });
+    });
 
 // Dashboard
 router.get("/dashboard", (req, res) => {
@@ -66,17 +67,19 @@ router.get("/dashboard", (req, res) => {
 });
 
 // Logout User
-router.get("/logout", (req, res, next) => {
+router.get("/logout", async(req, res, next) => {
 
-    req.logout((err) => {
+    await User.findByIdAndUpdate(req.user._id, { isOnline: false });
+
+    req.logout(function(err) {
 
         if (err) {
             return next(err);
         }
 
-        req.flash("success", "Logged Out Successfully");
+        req.flash("success", "Logged Out Successfully!");
 
-        res.redirect("/");
+        res.redirect("/login");
     });
 
 });
@@ -87,7 +90,7 @@ router.get("/profile", (req, res) => {
         req.flash("error", "You must be logged in to access the profile");
         return res.redirect("/login");
     }
-    res.render("profile");  
+    res.render("profile");
 
 });
 
