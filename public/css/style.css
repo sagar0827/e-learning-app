@@ -62,3 +62,32 @@ body.dark{
 
     color:white;
 }
+
+html,
+body{
+    min-height:100%;
+}
+
+body{
+    display:flex;
+    flex-direction:column;
+}
+
+.container{
+    flex:1;
+}
+
+.footer{
+    box-shadow:0 -2px 15px rgba(0,0,0,0.2);
+}
+
+.footer a:hover{
+    color:#0dcaf0 !important;
+}
+
+.card{
+    transition:0.3s;
+}
+.card:hover{
+    transform:translateY(-5px);
+}

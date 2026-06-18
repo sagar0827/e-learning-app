@@ -1,63 +1,5 @@
  <%- layout("layouts/boilerplate") %> 
 
-<!-- <div class="container mt-5">
-
-    <h2 class="mb-4">Manage Users</h2>
-
-    <% if(users.length === 0){ %>
-
-        <div class="alert alert-warning">
-            No Users Found
-        </div>
-    <% } %>
-
-    <% users.forEach(user => { %>
-        <div class="card mb-3">
-            <div class="card-body">
-
-                <h5 class="card-title">
-                    <%= user.username %>
-                </h5>
-
-                <p class="card-text">
-                    Email: <%= user.email %>
-                </p>
-
-                <p class="card-text">
-                    Role:
-                    <strong>
-                        <%= user.role %>
-                    </strong>
-                </p>
-
-                <% if(user.role === "user"){ %>
-                    <form
-                        action="/admin/users/<%= user._id %>/make-admin?_method=PUT"
-                        method="POST">
-                        <button class="btn btn-success">Make Admin</button>
-                    </form>
-                <% } else { %>
-
-                    <form
-                        action="/admin/users/<%= user._id %>/remove-admin?_method=PUT"
-                        method="POST">
-
-                        <button
-                            class="btn btn-warning">Remove Admin
-                        </button>
-                    </form>
-
-                <% } %>
-
-            </div>
-
-        </div>
-
-    <% }) %>
-
-</div> --> 
-
-
 <div class="container mt-5">
 
     <h2 class="mb-4 fw-bold">
@@ -69,8 +11,7 @@
 
         <div class="card-body">
 
-
-            <table class="table table-hover">
+            <table class="table table-hover align-middle">
 
                 <thead class="table-dark">
 
@@ -90,10 +31,17 @@
 
                     <tr>
 
-                        <td>
-                            <%= user.username %>
-                        </td>
-
+                          <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
+                                                style="width: 40px; height: 40px;">
+                                                <%= user.username.charAt(0).toUpperCase() %>
+                                            </div>
+                                            <div>
+                                                <%= user.username %>
+                                            </div>
+                                        </div>
+                                    </td>
 
                         <td>
                             <%= user.email %>
@@ -148,11 +96,7 @@
 
                             </form>
 
-
                             <% } %>
-
-
-
                             <form action="/admin/users/<%= user._id %>/delete"
                             method="POST"
                             class="d-inline">

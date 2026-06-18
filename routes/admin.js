@@ -42,10 +42,8 @@ router.get("/notes", isAdmin, async(req,res)=>{
         res.redirect("/admin/dashboard");
     }
 });
-
-
 //Delete Note Route
-router.post("/notes/:id/delete", isAdmin, async(req,res)=>{
+router.delete("/notes/:id", isAdmin, async(req,res)=>{
 
     try{
         await Note.findByIdAndDelete(req.params.id);
@@ -57,6 +55,7 @@ router.post("/notes/:id/delete", isAdmin, async(req,res)=>{
         res.redirect("/admin/notes");
     }catch(error){
         console.log(error);
+        req.flash("error","Unable to delete note");
         res.redirect("/admin/notes");
     }
 });

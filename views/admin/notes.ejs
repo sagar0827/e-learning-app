@@ -1,123 +1,109 @@
-
-<div class="container mt-4">
-
-    <h2 class="fw-bold mb-4">
-        Manage Notes
-    </h2>
-
-
-
-    <div class="card shadow border-0">
-
-
-        <div class="card-body">
-
-
-            <div class="table-responsive">
-
-
-                <table class="table table-hover align-middle">
-
-
-                    <thead class="table-dark">
-
-                        <tr>
-
-                            <th>Title</th>
-                            <th>Subject</th>
-                            <th>Uploaded By</th>
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-
-
-                    <tbody>
-
-
-                        <% notes.forEach(note=>{ %>
-
-
-                            <tr>
-
-
-                                <td>
-                                    <%= note.title %>
-                                </td>
-
-
-                                <td>
-                                    <%= note.subject %>
-                                </td>
-
-
-                                <td>
-
-                                    <%= note.owner.name %>
-
-                                        <br>
-
-                                        <small class="text-muted">
-                                            <%= note.owner.email %>
-                                        </small>
-
-                                </td>
-
-
-
-                                <td>
-
-
-                                    <a href="/notes/<%= note._id %>" class="btn btn-primary btn-sm">
-
-                                        View
-
-                                    </a>
-
-
-
-                                    <form action="/admin/notes/<%= note._id %>/delete" method="POST" class="d-inline">
-
-
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Delete this note?')">
-
-                                            Delete
-
-                                        </button>
-
-
-                                    </form>
-
-
-
-                                </td>
-
-
-                            </tr>
-
-
-
-                            <% }) %>
-
-
-
-                    </tbody>
-
-
-                </table>
-
-
+<%- layout("layouts/boilerplate") %>
+    <div class="container mt-4">
+
+        <h2 class="fw-bold mb-4">
+            Manage Notes
+        </h2>
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card shadow  border-0 text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">
+                            Total Notes
+                        </h6>
+                        <h2 class="fw-bold text-success">
+                            <%= notes.length %>
+                        </h2>
+                    </div>
+                </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="card shadow  border-0 text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">
+                            PDF Files
+                        </h6>
+                        <h2 class="fw-bold text-primary">
+                            <%= notes.length %>
+                        </h2>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-md-4">
+                <div class="card shadow border-0 text-center">
+                    <div class="card-body">
+                        <h6 class="text-muted">
+                            Active Uploaders
+                        </h6>
+                        <h2 class="fw-bold text-info">
+                            <%= new Set(notes.map(n=>n.owner?._id)).size %>
+                        </h2>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+
+                                <th>Title</th>
+                                <th>Subject</th>
+                                <th>Uploaded By</th>
+                                <th>Date</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% notes.forEach(note=> { %>
+                                <tr>
+                                    <td>
+                                        <%= note.title %>
+                                    </td>
+                                    <td>
+                                        <%= note.subject %>
+                                    </td>
+                                    <td>
+                                        <%= note.owner ? note.owner.username : "Unknown" %>
+                                            <br>
+                                            <small class="text-muted">
+                                            <%= note.owner ? note.owner.email : "No Email" %>
+                                        </small> </td>
+
+                                    <td>
+                                        <%= note.createdAt.toDateString() %>
+                                    </td>
+                                    <td>
+                                        <a href="/<%= note.file %>" target="_blank" class="btn btn-primary btn-sm">
+                                    
+                                        View
+                                        
+                                    </a>
+
+                                        <form action="/admin/notes/<%= note._id %>?_method=DELETE" method="POST" class="d-inline">
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this note?')">
+                                            Delete
+                                        </button>
+
+                                        </form>
+
+                                    </td>
+
+
+                                </tr>
+
+                                <% }) %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-
-</div>

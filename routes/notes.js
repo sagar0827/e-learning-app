@@ -73,10 +73,6 @@ router.post(
     }
 );
 
-
-
-
-
 // View Single Note
 
 router.get("/:id", async(req, res) => {
@@ -102,8 +98,5 @@ router.delete("/:id", isLoggedIn, isOwner, async(req, res) => {
     res.redirect("/notes");
 
 });
-
-
-
 
 module.exports = router;
