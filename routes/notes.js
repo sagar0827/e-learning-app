@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {isLoggedIn , isOwner } = require("../middleware");
+const { isLoggedIn, isOwner } = require("../middleware");
 const path = require("path");
 const multer = require("multer");
 
@@ -9,10 +9,10 @@ const Note = require("../models/Note");
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, "uploads/");
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     },
 });
@@ -20,65 +20,67 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
+
+
 //show All Notes with Search
-router.get("/", async(req,res)=>{
+router.get("/", async(req, res) => {
 
     let search = req.query.search || "";
 
     const notes = await Note.find({
-        title:{
+        title: {
             $regex: search,
-            $options:"i"
-        }
+            $options: "i"
+        },
+        isApproved: true
     });
 
     res.render(
-        "notes",
-        {notes,search}
+        "notes", { notes, search }
     );
 });
 
 
 // Upload page 
-router.get("/upload",isLoggedIn, (req, res) => {
+router.get("/upload", isLoggedIn, (req, res) => {
     res.render("upload");
 });
 
 //Save  Uploaded Note
 router.post(
-    "/",isLoggedIn,
+    "/", isLoggedIn,
     upload.single("file"),
 
-    async (req, res) => {
+    async(req, res) => {
         try {
-        const { title, subject, description } = req.body;
-        const newNote = new Note({
+            const { title, subject, description } = req.body;
+            const newNote = new Note({
 
-            title,
-            subject,
-            description,
+                title,
+                subject,
+                description,
 
-            file: req.file ? req.file.path : null,
-          owner : req.user._id
+                file: req.file ? req.file.path : null,
+                owner: req.user._id
 
-        });
-        await newNote.save();
-        req.flash("success", "Note Uploaded Successfully!");
-        res.redirect("/notes");
-    }catch (err){
-        console.log(err);
-        req.flash("error","Upload Failed !");
-        res.redirect("/notes");
-    }
+            });
+            await newNote.save();
+            req.flash("success", "Note Uploaded Successfully!");
+            res.redirect("/notes");
+        } catch (err) {
+            console.log(err);
+            req.flash("error", "Upload Failed !");
+            res.redirect("/notes");
+        }
     }
 );
 
 // View Single Note
 
 router.get("/:id", async(req, res) => {
-    const note = 
-    await Note.findById(req.params.id).populate("owner");
-    if(!note){
+    const note =
+        await Note.findById(req.params.id).populate("owner");
+    if (!note) {
         req.flash("error", "Note not found!");
         return res.redirect("/notes");
     }

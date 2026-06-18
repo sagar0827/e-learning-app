@@ -1,0 +1,74 @@
+<%- layout("layouts/boilerplate") %>
+
+    <div class="container mt-4">
+
+        <h1 class="mb-4">
+            Pending Notes
+        </h1>
+
+        <% if(notes.length===0){ %>
+
+            <div class="alert alert-success">
+
+                No Pending Notes
+
+            </div>
+
+            <% } %>
+
+                <% notes.forEach(note=>{ %>
+
+                    <div class="card mb-3 shadow">
+
+                        <div class="card-body">
+
+                            <h4>
+                                <%= note.title %>
+                            </h4>
+
+                            <p>
+                                Subject :
+                                <%= note.subject %>
+                            </p>
+
+                            <p>
+                                <%= note.description %>
+                            </p>
+
+                            <p>
+                                Uploaded By :
+                                <%= note.owner?.username %>
+                            </p>
+
+                            <div class="d-flex gap-2">
+
+                                <form action="/admin/notes/<%= note._id %>/approve?_method=PUT" method="POST">
+
+                                    <button class="btn btn-success">
+                                        Approve
+                                    </button>
+
+                                </form>
+
+                                <a href="/<%= note.file %>" target="_blank" class="btn btn-primary">
+                                    View
+                                </a>
+
+                                <form action="/admin/notes/<%= note._id %>?_method=DELETE" method="POST">
+
+                                    <button class="btn btn-danger">                   
+                                        
+                                     Reject
+                                      </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <% }) %>
+
+    </div>

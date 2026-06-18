@@ -2,6 +2,7 @@
 
     <div class="container mt-4">
         <!-- Dashboard Cards -->
+
         <div class="row g-4 mb-4">
             <div class="col-md-4">
                 <div class="card shadow border-0 text-center">
@@ -65,38 +66,74 @@
 
             </div>
 
+            <div class="col-md-4">
 
+                <div class="card shadow border-0 text-center">
+
+                    <div class="card-body">
+
+                        <h5 class="text-muted">
+                            Pending Notes
+                        </h5>
+
+                        <h2 class="fw-bold text-info">
+                            <%= pendingNotes %>
+                        </h2>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card shadow border-0 text-center">
+
+                    <div class="card-body">
+
+                        <h5 class="text-muted">
+                            Approved Notes
+                        </h5>
+
+                        <h2 class="fw-bold text-success">
+                            <%= approvedNotes %>
+                        </h2>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-
 
         <!-- Manage User Button -->
 
-        <div class="d-flex gap-3 mb-4">
-            
-            <a href="/admin/users" class="btn btn-primary">
+        <div class=" d-flex gap-3 mb-4 ">
+
+            <a href="/admin/users " class="btn btn-primary ">
                 Manage Users
             </a>
 
-            <a href="/admin/notes" class="btn btn-success">
+            <a href="/admin/notes " class="btn btn-success ">
                 Manage Notes
             </a>
-
+            <a href="/admin/pending-notes " class="btn btn-info ">
+                Pending Notes
+            </a>
         </div>
 
         <!-- Admin Table -->
-        <div class="card shadow border-0">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">
+        <div class="card shadow border-0 ">
+            <div class="card-header bg-primary text-white ">
+                <h4 class="mb-0 ">
                     Admins Management
                 </h4>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+            <div class="card-body ">
+                <div class="table-responsive ">
+                    <table class="table table-hover align-middle ">
 
 
-                        <thead class="table-primary">
+                        <thead class="table-primary ">
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -111,9 +148,8 @@
                             <% admins.forEach(admin=> { %>
                                 <tr>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
-                                                style="width: 40px; height: 40px;">
+                                        <div class="d-flex align-items-center ">
+                                            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3 " style="width: 40px; height: 40px; ">
                                                 <%= admin.username.charAt(0).toUpperCase() %>
                                             </div>
                                             <div>
@@ -129,7 +165,7 @@
 
                                     <td>
 
-                                        <span class="badge bg-success px-3 py-2">
+                                        <span class="badge bg-success px-3 py-2 ">
                                             <%= admin.role %>
                                         </span>
 
@@ -140,7 +176,7 @@
                                         <% if(admin._id.toString() !==currUser._id.toString()){ %>
 
 
-                                            <form action="/admin/users/<%= admin._id %>/remove-admin" method="POST">
+                                            <form action="/admin/users/<%=admin._id %>/remove-admin" method="POST">
 
 
                                                 <button class="btn btn-warning btn-sm">
@@ -172,4 +208,6 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
