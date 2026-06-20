@@ -1,19 +1,40 @@
-<% layout('layouts/boilerplate') %>
-
+<%- layout("layouts/admin") %>
     <div class="container mt-4">
-        <!-- Dashboard Cards -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
+            <div>
+                <h2 class="fw-bold">Admin Dashboard</h2>
+                <p class="text-muted mb-0">
+                    Welcome back,
+                    <%= currUser.username %>
+                </p>
+            </div>
+
+            <div>
+                <span class="badge bg-success px-3 py-2">
+            System Online
+        </span>
+            </div>
+
+        </div>
+
+        <!-- Dashboard Cards -->
         <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="card shadow border-0 text-center">
+            <div class="col-md-3">
+                <div class="card stat-card users">
                     <div class="card-body">
-                        <h5 class="text-muted">
+                        <div  class="note-icon me-3">
+                         <i class="bi bi-people-fill fs-1 text-primary"></i>
+                        </div>
+                         <h5>
                             Total Users
+                            
                         </h5>
 
-                        <h2 class="fw-bold text-primary">
+                        <h2>
                             <%= users %>
                         </h2>
+                        <small>Registered Users</small>
 
                     </div>
 
@@ -23,19 +44,22 @@
 
 
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
-                <div class="card shadow border-0 text-center">
+                <div class="card stat-card notes">
 
                     <div class="card-body">
-
-                        <h5 class="text-muted">
+                        <div class="note-icon1 note-icon me-3">
+                             <i class="bi bi-file-earmark-text-fill fs-1 text-success"></i>
+                        </div>                  
+                             <h5>
                             Total Notes
                         </h5>
 
-                        <h2 class="fw-bold text-success">
+                        <h2>
                             <%= notes %>
                         </h2>
+                        <small>Uploaded Notes</small>
 
                     </div>
 
@@ -45,19 +69,22 @@
 
 
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
-                <div class="card shadow border-0 text-center">
+                <div class="card stat-card admins">
 
                     <div class="card-body">
-
-                        <h5 class="text-muted">
+                        <div class="note-icon2 note-icon me-3">
+                     <i class="bi bi-person-badge-fill fs-1 text-warning"></i>
+                        </div>
+                        <h5>
                             Total Admins
                         </h5>
 
-                        <h2 class="fw-bold text-warning">
+                        <h2>
                             <%= admins.length %>
                         </h2>
+                        <small>Admins</small>
 
 
                     </div>
@@ -66,61 +93,222 @@
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
-                <div class="card shadow border-0 text-center">
+                <div class="card stat-card pending">
 
                     <div class="card-body">
-
-                        <h5 class="text-muted">
+                        <div class="note-icon3 note-icon me-3">
+                    <i class="bi bi-clock-history fs-1 text-info"></i>
+                        </div>    
+                    <h5>
                             Pending Notes
                         </h5>
 
-                        <h2 class="fw-bold text-info">
+                        <h2>
                             <%= pendingNotes %>
                         </h2>
+                        <small>Need Approval</small>
 
                     </div>
 
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
-                <div class="card shadow border-0 text-center">
+                <div class="card stat-card approved">
 
                     <div class="card-body">
-
-                        <h5 class="text-muted">
+                        <div class="note-icon1 note-icon me-3">
+                 <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+                        </div>
+                        <h5>
                             Approved Notes
                         </h5>
 
-                        <h2 class="fw-bold text-success">
+                        <h2>
                             <%= approvedNotes %>
                         </h2>
+                        <small>Published Notes</small>
 
                     </div>
 
                 </div>
             </div>
+            
+            <div class="col-md-3">
+
+                <div class="card  stat-card Approved">
+
+                    <div class="card-body">
+                        <div class="note-icon1 note-icon me-3">
+                 <i class="bi bi-pie-chart-fill fs-1 text-success"></i>
+                        </div>
+                        <h5>
+                            Approval Rate
+                        </h5>
+
+                        <h2>
+                            <%= approvalRate %>
+                        </h2>
+                        <small>Approved Rate</small>
+
+                    </div>
+
+                </div>
+            </div>
+            
+
         </div>
 
-        <!-- Manage User Button -->
 
-        <div class=" d-flex gap-3 mb-4 ">
+        <div class="row g-4 mb-4">
 
-            <a href="/admin/users " class="btn btn-primary ">
-                Manage Users
-            </a>
+            <!-- Line Chart -->
+            <div class="col-lg-8">
 
-            <a href="/admin/notes " class="btn btn-success ">
-                Manage Notes
-            </a>
-            <a href="/admin/pending-notes " class="btn btn-info ">
-                Pending Notes
-            </a>
+                <div class="card dashboard-card border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Notes Upload Overview</h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <canvas id="notesChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        
+
+
+
+            <!-- Recent Notes -->
+            <div class="col-lg-4">
+                <div class="card dashboard-card border-0 h-100">
+                              <div class="card-header bg-white">
+                                    <h5 class="mb-0">Recent Notes</h5>
+                              </div>
+                        <div class="card-body">
+
+                <% recentNotes.forEach(note => { %>
+
+                 <div class="d-flex align-items-center justify-content-between p-3 mb-3 border rounded recent-note-card">
+
+          <div class="d-flex align-items-center">
+
+        <div class="note-icon me-3">
+            <i class="bi bi-file-earmark-text-fill"></i>
         </div>
 
+        <div>
+            <h6 class="mb-1 fw-bold">
+                <%= note.title %>
+            </h6>
+
+            <small class="text-muted">
+                <%= note.subject %>
+            </small>
+
+            <br>
+
+            <small class="text-primary">
+                By <%= note.owner?.username || "Unknown" %>
+            </small>
+        </div>
+
+    </div>
+
+    <span class="badge bg-success">
+        Latest
+    </span>
+
+</div>
+
+<% }) %>
+
+</div>
+
+                </div>
+            </div>
+
+
+        <div class="row g-4 mb-5">
+
+            <!-- Top Contributors -->
+
+            <div class="col-md-6 mb-4">
+
+                <div class="card dashboard-card border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            Top Contributors
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <% contributors.forEach(user=> { %>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                <div>
+                                    <strong>
+                                <%= user.username %>
+                            </strong>
+                                </div>
+
+                                <span class="badge bg-primary">
+                            Active
+                        </span>
+
+                            </div>
+
+                            <% }) %>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Recent Activity -->
+
+            <div class="col-md-6 mb-4">
+
+                <div class="card dashboard-card border-0 h-100">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            Recent Activity
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>🟢 New user registered</p>
+
+                        <p>📄 Notes uploaded</p>
+
+                        <p>✅ Notes approved</p>
+
+                        <p>👨‍💼 Admin updated</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+              
         <!-- Admin Table -->
         <div class="card shadow border-0 ">
             <div class="card-header bg-primary text-white ">
@@ -208,6 +396,4 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
