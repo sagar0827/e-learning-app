@@ -12,7 +12,11 @@ router.get("/dashboard", isAdmin, async(req, res) => {
         const notes = await Note.countDocuments();
         const pendingNotes = await Note.countDocuments({ isApproved: false });
         const approvedNotes = await Note.countDocuments({ isApproved: true });
-        res.render("admin/dashboard", { users, notes, admins, pendingNotes, approvedNotes });
+        const recentNotes = await Note.find().sort({ createdAt: -1 }).limit(5).populate("owner");
+        const contributors = await User.find().sort({ createdAt: -1 }).limit(5);
+        const latestUsers = await User.find().sort({ createdAt: -1}).limit(5);
+        const approvalRate = notes >0 ?Math.round((approvedNotes / notes) * 100):0;
+        res.render("admin/dashboard", { users, notes, admins, pendingNotes, approvedNotes, recentNotes, contributors,latestUsers,approvalRate });
 
     } catch (error) {
         console.log(error);
