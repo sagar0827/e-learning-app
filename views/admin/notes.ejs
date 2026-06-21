@@ -82,11 +82,25 @@
                                         <%= note.subject %>
                                     </td>
                                     <td>
-                                        <%= note.owner ? note.owner.username : "Unknown" %>
-                                            <br>
-                                            <small class="text-muted">
-                                            <%= note.owner ? note.owner.email : "No Email" %>
-                                        </small> </td>
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="avatar-circle me-2">
+                                                <%= note.owner?.username?.charAt(0).toUpperCase() || "U" %>
+                                            </div>
+
+                                            <div>
+                                                <div>
+                                                    <%= note.owner?.username || "Unknown" %>
+                                                </div>
+                                                <small class="text-muted">
+                                                <%= note.owner?.email || "No Email" %>
+                                                </small>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+
 
                                     <td>
                                         <%= note.createdAt.toDateString() %>
