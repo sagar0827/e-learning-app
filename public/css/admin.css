@@ -1,152 +1,178 @@
-body{
-    background:#f4f6f9;
-}
-
-.sidebar{
-    min-height:100vh;
-    background:#0f172a;
-    color:white;
-    padding:20px;
-}
-
-.logo{
-    color:white;
-    font-weight:bold;
-}
-
-.sidebar .nav-link{
-    color:#cbd5e1;
-    margin-bottom:10px;
-    border-radius:10px;
-}
-
-.sidebar .nav-link:hover{
-    background:#1e293b;
-    color:white;
-}
-
-.sidebar .active{
-    background:#2563eb;
-    color:white;
-}
-
-.dashboard-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:25px 0;
-}
-
-.stat-card{
-    border:none;
-    border-radius:15px;
-    color:white;
-    transition:.3s;
-}
-
-.stat-card:hover{
-    transform:translateY(-5px);
-}
-
-.users{
-    background:#2563eb;
-}
-
-.notes{
-    background:#16a34a;
-}
-
-.pending{
-    background:#f59e0b;
-}
-
-.approved{
-    background:#06b6d4;
-}
-
-.card{
-    border:none;
-    border-radius:15px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
-
-
-.dashboard-card{
-    border-radius:15px;
-    transition:.3s;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-}
-
-.dashboard-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
-}
-
-.card{
-    border-radius:15px;
-}
-
-/* Recent Notes */
-.recent-note-card{
-    transition: 0.3s;
-    background: #fff;
-}
-
-.recent-note-card:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.note-icon{
-    width:50px;
-    height:50px;
-    border-radius:12px;
-    background:#e8f4ff;
-    color:#0d6efd;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:1.3rem;
-}
-.note-icon1{
-        background:#cefad0;
-}
-.note-icon2{
-        background:#FDFBD4;
+    body {
+        background: #f4f6f9;
     }
-    .note-icon3{
-        background:#E3F1FF;
-}
-
-
-
-/* admin sidebar */
-.sidebar{
-    min-height:100vh;
-    background:#0f172a;
-}
-
-.sidebar .nav-link{
-    padding:12px;
-    border-radius:10px;
-    transition:.3s;
-}
-
-.sidebar .nav-link:hover{
-    background:#1e293b;
-}
-
-.sidebar .nav-link i{
-    margin-right:8px;
-}
-
-body{
-    background:#f5f7fb;
-}
-
-.card{
-    border:none;
-    border-radius:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
+    
+    .sidebar {
+        min-height: 100vh;
+        background: #0f172a;
+        color: white;
+        padding: 20px;
+    }
+    
+    .logo {
+        color: white;
+        font-weight: bold;
+    }
+    
+    .sidebar .nav-link {
+        color: #cbd5e1;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+    
+    .sidebar .nav-link:hover {
+        background: #1e293b;
+        color: white;
+    }
+    
+    .sidebar .active {
+        background: #2563eb;
+        color: white;
+    }
+    
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 25px 0;
+    }
+    
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        color: white;
+        transition: .3s;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .users {
+        background: #2563eb;
+    }
+    
+    .notes {
+        background: #16a34a;
+    }
+    
+    .pending {
+        background: #f59e0b;
+    }
+    
+    .approved {
+        background: #06b6d4;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+    }
+    
+    .dashboard-card {
+        border-radius: 15px;
+        transition: .3s;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+    }
+    
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+    }
+    
+    .card {
+        border-radius: 15px;
+    }
+    /* Recent Notes */
+    
+    .recent-note-card {
+        transition: 0.3s;
+        background: #fff;
+    }
+    
+    .recent-note-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .note-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: #e8f4ff;
+        color: #0d6efd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+    }
+    
+    .note-icon1 {
+        background: #cefad0;
+    }
+    
+    .note-icon2 {
+        background: #FDFBD4;
+    }
+    
+    .note-icon3 {
+        background: #E3F1FF;
+    }
+    /* admin sidebar */
+    
+    .sidebar {
+        min-height: 100vh;
+        background: #0f172a;
+    }
+    
+    .sidebar .nav-link {
+        color: white;
+        margin-bottom: 8px;
+        padding: 12px 15px;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+    
+    .sidebar .nav-link:hover {
+        background: #1e293b;
+    }
+    
+    .sidebar .nav-link i {
+        margin-right: 8px;
+    }
+    
+    body {
+        background: #f5f7fb;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+    }
+    
+    .sidebar.nav-link.active {
+        background: #2563eb;
+        color: white !important;
+        font-weight: 600;
+    }
+    
+    .table tbody tr:hover {
+        background: #f8f9fa;
+        transition: .3s;
+    }
+    /* manage users  */
+    
+    .avatar-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: #0d6efd;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 18px;
+    }

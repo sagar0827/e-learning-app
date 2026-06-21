@@ -14,9 +14,9 @@ router.get("/dashboard", isAdmin, async(req, res) => {
         const approvedNotes = await Note.countDocuments({ isApproved: true });
         const recentNotes = await Note.find().sort({ createdAt: -1 }).limit(5).populate("owner");
         const contributors = await User.find().sort({ createdAt: -1 }).limit(5);
-        const latestUsers = await User.find().sort({ createdAt: -1}).limit(5);
-        const approvalRate = notes >0 ?Math.round((approvedNotes / notes) * 100):0;
-        res.render("admin/dashboard", { users, notes, admins, pendingNotes, approvedNotes, recentNotes, contributors,latestUsers,approvalRate });
+        const latestUsers = await User.find().sort({ createdAt: -1 }).limit(5);
+        const approvalRate = notes > 0 ? Math.round((approvedNotes / notes) * 100) : 0;
+        res.render("admin/dashboard", { users, notes, admins, pendingNotes, approvedNotes, recentNotes, contributors, latestUsers, approvalRate, currentPage: "dashboard" });
 
     } catch (error) {
         console.log(error);
@@ -32,7 +32,8 @@ router.get("/pending-notes", isAdmin, async(req, res) => {
     }).populate("owner");
 
     res.render("admin/pendingNotes", {
-        notes
+        notes,
+        currentPage: "pending"
     });
 });
 
@@ -59,7 +60,8 @@ router.get("/notes", isAdmin, async(req, res) => {
             .populate("owner");
 
         res.render("admin/notes", {
-            notes
+            notes,
+            currentPage: "notes"
         });
 
     } catch (error) {
@@ -92,10 +94,14 @@ router.delete("/notes/:id", isAdmin, async(req, res) => {
     }
 });
 
+
 // all  Users
 router.get("/users", isAdmin, async(req, res) => {
     const users = await User.find({ role: "user" });
-    res.render("admin/users", { users });
+    res.render("admin/users", {
+        users,
+        currentPage: "users"
+    });
 });
 
 
@@ -134,4 +140,5 @@ router.post("/users/:id/delete", isAdmin, async(req, res) => {
 });
 
 
+module.exports = router;
 module.exports = router;
