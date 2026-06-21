@@ -59,9 +59,12 @@ router.get("/notes", isAdmin, async(req, res) => {
         const notes = await Note.find({})
             .populate("owner");
 
+        const subjectsCount = new Set(notes.map(note => note.subject)).size;
+
         res.render("admin/notes", {
             notes,
-            currentPage: "notes"
+            currentPage: "notes",
+            subjectsCount
         });
 
     } catch (error) {
