@@ -26,9 +26,9 @@ router.get("/dashboard", isAdmin, async(req, res) => {
 });
 
 // Pending Notes route
-router.get("/pending-notes", isAdmin, async(req, res) => {
+router.get("/notes/pending", isAdmin, async(req, res) => {
     const notes = await Note.find({
-        isApproved: false
+        status: "pending"
     }).populate("owner");
 
     res.render("admin/pendingNotes", {
@@ -37,19 +37,44 @@ router.get("/pending-notes", isAdmin, async(req, res) => {
     });
 });
 
+
+// pending/view note
+router.get("/notes/:id", isAdmin, async(req, res) => {
+    const note = await Note.findById(req.params.id)
+        .populate("owner");
+
+    res.render("admin/noteDetails", {
+        note,
+        currentPage: "pending-notes"
+
+
+
+    });
+});
+
 // Approve Note Route
 router.put("/notes/:id/approve", isAdmin, async(req, res) => {
     try {
-        await Note.findByIdAndUpdate(req.params.id, { isApproved: true });
+        await Note.findByIdAndUpdate(req.params.id, { status: "approved" });
         req.flash("success", "Note approved successfully");
-        res.redirect("/admin/pending-notes");
+        res.redirect("/admin/notes/pending");
     } catch (error) {
         console.log(error);
         req.flash("error", "Unable to approve note");
-        res.redirect("/admin/pending-notes");
+        res.redirect("/admin/notes/pending");
     }
 });
 
+//rejected
+router.put("/notes/:id/reject", isAdmin, async(req, res) => {
+
+    await Note.findByIdAndUpdate(req.params.id, {
+        status: "rejected"
+    });
+
+    req.flash("success", "Note Rejected");
+    res.redirect("/admin/notes/pending");
+});
 
 
 
@@ -129,7 +154,7 @@ router.post("/users/:id/remove-admin", isAdmin, async(req, res) => {
 });
 
 // Delete User
-router.post("/users/:id/delete", isAdmin, async(req, res) => {
+router.post("/users/:id", isAdmin, async(req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         console.log(user);
@@ -141,6 +166,9 @@ router.post("/users/:id/delete", isAdmin, async(req, res) => {
         res.redirect("/admin/users");
     }
 });
+
+
+module.exports = router;
 
 
 module.exports = router;

@@ -61,7 +61,9 @@ router.post(
                 description,
 
                 file: req.file ? req.file.path : null,
-                owner: req.user._id
+                owner: req.user._id,
+                status: "pending",
+                isApproved: false
 
             });
             await newNote.save();
@@ -84,7 +86,7 @@ router.get("/:id", async(req, res) => {
         req.flash("error", "Note not found!");
         return res.redirect("/notes");
     }
-    res.render("video", { note });
+    res.render("videos", { note });
 });
 
 
