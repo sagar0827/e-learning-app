@@ -21,10 +21,7 @@ const noteSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    isApproved: {
-        type: Boolean,
-        default: false
-    },
+
     status: {
         type: String,
         enum: ["pending", "approved", "rejected"],

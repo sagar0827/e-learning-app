@@ -62,8 +62,8 @@ router.post(
 
                 file: req.file ? req.file.path : null,
                 owner: req.user._id,
-                status: "pending",
-                isApproved: false
+                status: "pending"
+            
 
             });
             await newNote.save();

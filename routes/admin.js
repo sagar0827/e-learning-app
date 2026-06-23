@@ -10,8 +10,8 @@ router.get("/dashboard", isAdmin, async(req, res) => {
         const admins = await User.find({ role: "admin" });
         const users = await User.countDocuments({ role: "user" });
         const notes = await Note.countDocuments();
-        const pendingNotes = await Note.countDocuments({ isApproved: false });
-        const approvedNotes = await Note.countDocuments({ isApproved: true });
+        const pendingNotes = await Note.countDocuments({ status:"pending" });
+        const approvedNotes = await Note.countDocuments({ status : "approved" });
         const recentNotes = await Note.find().sort({ createdAt: -1 }).limit(5).populate("owner");
         const contributors = await User.find().sort({ createdAt: -1 }).limit(5);
         const latestUsers = await User.find().sort({ createdAt: -1 }).limit(5);
@@ -25,7 +25,7 @@ router.get("/dashboard", isAdmin, async(req, res) => {
     }
 });
 
-// Pending Notes route
+// Pending Notes
 router.get("/notes/pending", isAdmin, async(req, res) => {
     const notes = await Note.find({
         status: "pending"
@@ -38,7 +38,22 @@ router.get("/notes/pending", isAdmin, async(req, res) => {
 });
 
 
-// pending/view note
+//Approved Notes
+router.get("/notes/approved", isAdmin, async (req, res) => {
+
+    const notes = await Note.find({
+        status: "approved"
+    }).populate("owner");
+
+    res.render("admin/approvedNotes", {
+        notes,
+        currentPage: "approved"
+    });
+
+});
+
+
+// pending/notesdetail/view note
 router.get("/notes/:id", isAdmin, async(req, res) => {
     const note = await Note.findById(req.params.id)
         .populate("owner");
@@ -52,7 +67,7 @@ router.get("/notes/:id", isAdmin, async(req, res) => {
     });
 });
 
-// Approve Note Route
+// Approve Pending-Note 
 router.put("/notes/:id/approve", isAdmin, async(req, res) => {
     try {
         await Note.findByIdAndUpdate(req.params.id, { status: "approved" });
@@ -65,7 +80,7 @@ router.put("/notes/:id/approve", isAdmin, async(req, res) => {
     }
 });
 
-//rejected
+//rejected Pending-Notes
 router.put("/notes/:id/reject", isAdmin, async(req, res) => {
 
     await Note.findByIdAndUpdate(req.params.id, {
@@ -75,6 +90,7 @@ router.put("/notes/:id/reject", isAdmin, async(req, res) => {
     req.flash("success", "Note Rejected");
     res.redirect("/admin/notes/pending");
 });
+
 
 
 
@@ -168,8 +184,4 @@ router.post("/users/:id", isAdmin, async(req, res) => {
 });
 
 
-module.exports = router;
-
-
-module.exports = router;
 module.exports = router;
