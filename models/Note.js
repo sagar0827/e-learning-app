@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = require('mongoose');
-
 const noteSchema = new Schema({
     title: {
         type: String,
@@ -21,23 +20,22 @@ const noteSchema = new Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-
     },
     isApproved: {
         type: Boolean,
         default: false
     },
-
-
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
+    },
     createdAt: {
         type: Date,
         default: Date.now
     }
 
-
 });
-
-
 
 const Note = mongoose.models.Note || mongoose.model("Note", noteSchema);
 

@@ -23,19 +23,16 @@ const noteRoutes = require("./routes/notes");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb){
+    destination: function(req, file, cb) {
         cb(null, "uploads/");
     },
-    filename: function(req, file, cb){
+    filename: function(req, file, cb) {
         cb(null, Date.now() + "-" + file.originalname);
     }
 });
 const upload = multer({ storage });
-
-
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
@@ -60,39 +57,39 @@ const sessionOption = {
 app.use(session(sessionOption));
 app.use(flash());
 
-app.use(passport.initialize()); 
+app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //Flass Message Middleware
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     next();
 });
 
-app.use("/", userRoutes);
-app.use("/notes", noteRoutes);
- app.use("/uploads", express.static("uploads"));
-app.use("/admin", adminRoutes);
 
- app.get('/', (req, res) => {
-  res.render("home");
+app.use("/", userRoutes);
+app.use("/admin", adminRoutes);
+app.use("/notes", noteRoutes);
+app.use("/uploads", express.static("uploads"));
+
+
+app.get('/', (req, res) => {
+    res.render("home");
 });
 
 // Connect to MongoDB
- mongoose.connect(process.env.MONGO_URL).then(() => {
-  console.log('Connected to MongoDB');
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    console.log('Connected to MongoDB');
 }).catch(err => {
-  console.error('Error connecting to MongoDB', err);
+    console.error('Error connecting to MongoDB', err);
 });
-
-
 // Start the server
 
 app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+    console.log("Server is running on port 3000");
 });

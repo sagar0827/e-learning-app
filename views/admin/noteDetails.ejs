@@ -1,0 +1,119 @@
+<%- layout("layouts/admin") %>
+
+    <div class="container-fluid mt-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">
+                <i class="bi bi-file-earmark-pdf text-danger"></i> Note Details
+            </h2>
+
+            <a href="/admin/notes/pending" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="row">
+
+            <!-- PDF Preview -->
+            <div class="col-lg-8 mb-3">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            PDF Preview
+                        </h5>
+                    </div>
+
+                    <div class="card-body p-0 ">
+
+                        <iframe src="/<%= note.file %>" width="100%" height="700" style="border:none;">
+                    </iframe>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Note Information -->
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body">
+
+                        <h3 class="fw-bold">
+                            Note Information
+                        </h3>
+
+                        <hr>
+                        <p>
+                            <strong>Title:</strong><br>
+                            <%= note.title %>
+                        </p>
+
+                        <p>
+                            <strong>Subject:</strong><br>
+                            <%= note.subject %>
+                        </p>
+
+                        <p>
+                            <strong>Uploaded By:</strong><br>
+                            <%= note.owner?.username || "Unknown" %>
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong><br>
+                            <%= note.owner?.email || "No Email" %>
+                        </p>
+
+                        <p>
+                            <strong>Uploaded On:</strong><br>
+                            <%= note.createdAt.toDateString() %>
+                        </p>
+
+                        <p>
+                            <strong>Description:</strong><br>
+                            <%= note.description || "No description available." %>
+                        </p>
+
+                        <hr>
+
+                        <div class="d-grid gap-2"></div>
+
+                        <form action="/admin/notes/<%= note._id %>/approve?_method=PUT" method="POST">
+                            <button class="btn btn-success w-100">
+
+                                <i class="bi bi-check-circle"></i>
+                                Approve Note
+                            </button>
+
+                        </form>
+
+                        <form action="/admin/notes/<%= note._id %>/reject?_method=PUT" method="POST">
+
+                            <button class="btn btn-danger w-100 mt-2">
+                                <i class="bi bi-x-circle"></i>
+                                Reject Note
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+    </div>
+
+    </div>
+
+    </div>
+    </div>
+    </div>
