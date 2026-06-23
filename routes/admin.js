@@ -12,11 +12,12 @@ router.get("/dashboard", isAdmin, async(req, res) => {
         const notes = await Note.countDocuments();
         const pendingNotes = await Note.countDocuments({ status:"pending" });
         const approvedNotes = await Note.countDocuments({ status : "approved" });
+        const rejectedNotes = await Note.countDocuments({ status:"rejected" });
         const recentNotes = await Note.find().sort({ createdAt: -1 }).limit(5).populate("owner");
         const contributors = await User.find().sort({ createdAt: -1 }).limit(5);
         const latestUsers = await User.find().sort({ createdAt: -1 }).limit(5);
         const approvalRate = notes > 0 ? Math.round((approvedNotes / notes) * 100) : 0;
-        res.render("admin/dashboard", { users, notes, admins, pendingNotes, approvedNotes, recentNotes, contributors, latestUsers, approvalRate, currentPage: "dashboard" });
+        res.render("admin/dashboard", { users, notes, admins, pendingNotes, approvedNotes,rejectedNotes, recentNotes, contributors, latestUsers, approvalRate, currentPage: "dashboard" });
 
     } catch (error) {
         console.log(error);
@@ -51,6 +52,21 @@ router.get("/notes/approved", isAdmin, async (req, res) => {
     });
 
 });
+
+//Rejected Notes
+router.get("/notes/rejected", isAdmin, async (req, res) => {
+
+    const notes = await Note.find({
+        status: "rejected"
+    }).populate("owner");
+
+    res.render("admin/rejectedNotes", {
+        notes,
+        currentPage: "rejected"
+    });
+
+});
+
 
 
 // pending/notesdetail/view note
