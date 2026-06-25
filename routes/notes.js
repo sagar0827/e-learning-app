@@ -32,7 +32,7 @@ router.get("/", async(req, res) => {
             $regex: search,
             $options: "i"
         },
-        isApproved: true
+        status:"approved"
     });
 
     res.render(
