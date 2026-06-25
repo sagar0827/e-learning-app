@@ -32,7 +32,7 @@ router.get("/", async(req, res) => {
             $regex: search,
             $options: "i"
         },
-        status:"approved"
+        status: "approved"
     });
 
     res.render(
@@ -40,6 +40,16 @@ router.get("/", async(req, res) => {
     );
 });
 
+//my-notes route
+router.get("/my-notes", isLoggedIn, async(req, res) => {
+
+    const notes = await Note.find({
+        owner: req.user._id
+    });
+    res.render("myNotes", {
+        notes
+    });
+});
 
 // Upload page 
 router.get("/upload", isLoggedIn, (req, res) => {
@@ -63,7 +73,7 @@ router.post(
                 file: req.file ? req.file.path : null,
                 owner: req.user._id,
                 status: "pending"
-            
+
 
             });
             await newNote.save();
