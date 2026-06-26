@@ -42,12 +42,19 @@ router.get("/", async(req, res) => {
 
 //my-notes route
 router.get("/my-notes", isLoggedIn, async(req, res) => {
+    const notes = await Note.find({ owner: req.user._id });
 
-    const notes = await Note.find({
-        owner: req.user._id
-    });
+    const totalNotes = notes.length;
+    const approvedNotes = notes.filter(n => n.status === "approved").length;
+    const pendingNotes = notes.filter(n => n.status === "pending").length;
+    const rejectedNotes = notes.filter(n => n.status === "rejected").length;
+
     res.render("myNotes", {
-        notes
+        notes,
+        totalNotes,
+        approvedNotes,
+        pendingNotes,
+        rejectedNotes
     });
 });
 
