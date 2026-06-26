@@ -4,75 +4,87 @@
 
         <h2 class="fw-bold mb-4">My Notes</h2>
 
-        <% if(notes.length === 0){ %>
+        <% if(notes.length> 0){ %>
 
-            <div class="alert alert-info">
-                You have not uploaded any notes yet.
-            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
 
-            <% } else { %>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <tbody>
 
-                        <thead>
+                        <% notes.forEach(note=> { %>
+
                             <tr>
-                                <th>Title</th>
-                                <th>Subject</th>
-                                <th>Status</th>
-                                <th>Date</th>
+
+                                <td>
+                                    <%= note.title %>
+                                </td>
+
+                                <td>
+                                    <%= note.subject %>
+                                </td>
+
+                                <td>
+
+                                    <% if(note.status==="approved" ){ %>
+
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+
+                                        <% } else if(note.status==="pending" ){ %>
+
+                                            <span class="badge bg-warning text-dark">
+                                                Pending
+                                            </span>
+
+                                            <% } else { %>
+
+                                                <span class="badge bg-danger">
+                                                    Rejected
+                                                </span>
+
+                                                <% } %>
+
+                                </td>
+
+                                <td>
+                                    <%= note.createdAt.toDateString() %>
+                                </td>
+
                             </tr>
-                        </thead>
 
-                        <tbody>
+                            <% }) %>
 
-                            <% notes.forEach(note => { %>
+                    </tbody>
 
-                                <tr>
+                </table>
+            </div>
+            <% } else { %>
+                <div class="card shadow-sm border-0  rounded-4 p-5 text-center">
+                    <div class="card-body">
 
-                                    <td>
-                                        <%= note.title %>
-                                    </td>
+                        <i class="bi bi-journal-bookmark-fill display-1 text-primary"></i>
 
-                                    <td>
-                                        <%= note.subject %>
-                                    </td>
+                        <h3 class="mt-3">No Notes Yet</h3>
 
-                                    <td>
+                        <p class="text-muted">
+                            You haven't uploaded any notes yet. Start sharing your study material with others.
+                        </p>
 
-                                        <% if(note.status === "approved"){ %>
+                        <a href="/notes/upload" class="btn btn-primary btn-lg px-4 rounded-pill">
+                            <i class="bi bi-cloud-upload"></i> Upload Your First Note
+                        </a>
 
-                                            <span class="badge bg-success">
-                                        Approved
-                                    </span>
-
-                                            <% } else if(note.status === "pending"){ %>
-
-                                                <span class="badge bg-warning text-dark">
-                                        Pending
-                                    </span>
-
-                                                <% } else { %>
-
-                                                    <span class="badge bg-danger">
-                                        Rejected
-                                    </span>
-
-                                                    <% } %>
-
-                                    </td>
-
-                                    <td>
-                                        <%= note.createdAt.toDateString() %>
-                                    </td>
-
-                                </tr>
-
-                                <% }) %>
-
-                        </tbody>
-
-                    </table>
+                    </div>
                 </div>
 
                 <% } %>
