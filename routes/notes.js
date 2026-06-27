@@ -32,12 +32,51 @@ router.get("/", async(req, res) => {
             $regex: search,
             $options: "i"
         },
-        status:"approved"
+        status: "approved"
     });
 
     res.render(
         "notes", { notes, search }
     );
+});
+
+
+//my-notes route
+router.get("/my-notes", isLoggedIn, async(req, res) => {
+    const notes = await Note.find({ owner: req.user._id });
+
+    const totalNotes = notes.length;
+    const approvedNotes = notes.filter(n => n.status === "approved").length;
+    const pendingNotes = notes.filter(n => n.status === "pending").length;
+    const rejectedNotes = notes.filter(n => n.status === "rejected").length;
+
+    res.render("myNotes", {
+        notes,
+        totalNotes,
+        approvedNotes,
+        pendingNotes,
+        rejectedNotes
+    });
+});
+
+
+// My Note Details
+router.get("/my-notes/:id", isLoggedIn, async(req, res) => {
+
+    const note = await Note.findById(req.params.id).populate("owner");
+
+    if (!note) {
+        req.flash("error", "Note not found");
+        return res.redirect("/notes/my-notes");
+    }
+
+    if (!note.owner._id.equals(req.user._id)) {
+        req.flash("error", "Unauthorized");
+        return res.redirect("/notes/my-notes");
+    }
+
+    res.render("myNoteDetails", { note });
+
 });
 
 
@@ -63,7 +102,7 @@ router.post(
                 file: req.file ? req.file.path : null,
                 owner: req.user._id,
                 status: "pending"
-            
+
 
             });
             await newNote.save();
@@ -77,7 +116,8 @@ router.post(
     }
 );
 
-// View Single Note
+
+
 
 router.get("/:id", async(req, res) => {
     const note =

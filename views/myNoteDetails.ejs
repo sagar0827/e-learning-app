@@ -1,0 +1,74 @@
+<%- layout("layouts/boilerplate") %>
+
+    <div class="container mt-4">
+
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <h2 class="fw-bold">
+                        <%= note.title %>
+                    </h2>
+
+                    <% if(note.status==="approved"){ %>
+                        <span class="badge bg-success">Approved</span>
+                        <% } else if(note.status==="pending"){ %>
+                            <span class="badge bg-warning text-dark">Pending</span>
+                            <% } else { %>
+                                <span class="badge bg-danger">Rejected</span>
+                                <% } %>
+
+                </div>
+
+                <hr>
+
+                <h5>
+                    <i class="bi bi-book"></i> Subject
+                </h5>
+
+                <p>
+                    <%= note.subject %>
+                </p>
+
+                <h5>
+                    <i class="bi bi-card-text"></i> Description
+                </h5>
+
+                <p>
+                    <%= note.description %>
+                </p>
+
+                <h5>
+                    <i class="bi bi-calendar-event"></i> Uploaded On
+                </h5>
+
+                <p>
+                    <%= note.createdAt.toDateString() %>
+                </p>
+
+                <div class="mt-4">
+
+                    <% if(note.status==="approved"){ %>
+
+                        <a href="/<%= note.file %>" class="btn btn-success" download>
+
+                            <i class="bi bi-download"></i> Download PDF
+
+                        </a>
+
+                        <% } %>
+
+                            <a href="/notes/my-notes" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back
+
+                            </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
