@@ -74,6 +74,7 @@
                             <th>Subject</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -118,6 +119,25 @@
                                 <td>
                                     <%= note.createdAt.toDateString() %>
                                 </td>
+
+                                <td>
+                                    <a href="/notes/my-notes/<%= note._id %>" class="btn btn-sm btn-primary" title="View Note">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <form action="/notes/<%= note._id %>?_method=DELETE" method="POST" class="d-inline">
+                                        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to Delete this note?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    </form>
+
+                                    <% if(note.status ==="approved"){ %>
+                                        <a href="/<%= note.file %>" class="btn btn-sm btn-success" download title="Download"> <i class="bi bi-download"></i>
+                                        </a>
+                                        <% } %>
+
+                                </td>
+
 
                             </tr>
 
