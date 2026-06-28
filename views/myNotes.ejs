@@ -97,18 +97,21 @@
                                     <% if(note.status==="approved" ){ %>
 
                                         <span class="badge bg-success">
+                                            <i class="bi bi-patch-check-fill"></i>
                                             Approved
                                         </span>
 
                                         <% } else if(note.status==="pending" ){ %>
 
-                                            <span class="badge bg-warning text-dark">
+                                            <span class="badge bg-warning">
+                                                <i class=" bi bi-hourglass-split"></i>
                                                 Pending
                                             </span>
 
                                             <% } else { %>
 
                                                 <span class="badge bg-danger">
+                                                    <i class="bi bi-x-circle-fill"></i>
                                                     Rejected
                                                 </span>
 
@@ -117,19 +120,29 @@
                                 </td>
 
                                 <td>
-                                    <%= note.createdAt.toDateString() %>
+                                    <%= note.createdAt.toLocaleDateString("en-IN",{
+                                        day:"2-digit",
+                                        month:"short",
+                                        year:"numeric"
+                                    }) %>
                                 </td>
 
                                 <td>
-                                    <a href="/notes/my-notes/<%= note._id %>" class="btn btn-sm btn-primary" title="View Note">
+                                    <!-- View -->
+                                    <a href="/notes/my-notes/<%= note._id %>" class="btn btn-sm btn-primary" title="View">
                                         <i class="bi bi-eye"></i>
                                     </a>
-
+                                    <!-- Edit -->
+                                    <a href="/notes/<%= note._id %>/edit" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <!-- Delete -->
                                     <form action="/notes/<%= note._id %>?_method=DELETE" method="POST" class="d-inline">
                                         <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to Delete this note?')">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                     </form>
+                                    <!-- Download -->
 
                                     <% if(note.status ==="approved"){ %>
                                         <a href="/<%= note.file %>" class="btn btn-sm btn-success" download title="Download"> <i class="bi bi-download"></i>
