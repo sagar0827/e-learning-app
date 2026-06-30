@@ -1,59 +1,138 @@
 <% layout('layouts/boilerplate') %>
 
-    <h2 class="mb-4 text-center">
-        All Notes 📚
-    </h2>
- <form class="d-flex mb-4" method="GET" action="/notes">
-    <input class="form-control me-2" type="text" placeholder="Search Notes..." name="search" value="<%= typeof search !== 'undefined' ? search : '' %>">
-    <button class="btn btn-outline-success" type="submit">Search</button>
- </form>
- <a href="/notes/upload" class="btn btn-primary mb-4">
-    Upload New Notes </a>
+    <div class="container mt-5">
+        <!-- ================= HERO SECTION ================= -->
 
-    <div class="row">
-        <% if(notes.length===0){ %>
+        <section class="hero-section position-relative overflow-hidden mb-5">
 
-            <div class="alert alert-warning">No Notes Found</div>
+            <div class="container py-5">
 
-            <% } %>
-                <% notes.forEach(note=> { %>
+                <div class="row align-items-center">
 
-                    <div class="col-md-4 mb-4">
+                    <!-- Left -->
+                    <div class="col-lg-8 mx-auto text-center">
 
-                        <div class="card shadow-sm border-0 rounded-4 h-100">
+                        <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fs-6">
+                    📚 Learn. Explore. Succeed.
+                </span>
 
-                            <div class="card-body">
+                        <h1 class="display-4 fw-bold mb-3">
+                            Browse Study Notes
+                            <span>📚</span>
+                        </h1>
 
-                                <h5 class="card-title">
-                                    <%= note.title %>
-                                </h5>
+                        <p class="lead text-muted mb-4">
+                            Explore high-quality study materials shared by
+                            <strong>LearnHub</strong> users.
+                            <br> Find notes for every subject and topic.
+                        </p>
 
-                                <p class="card-text">
-                                    <%= note.subject %>
-                                </p>
+                        <a href="/notes/upload" class="btn btn-primary btn-lg px-4 shadow-sm">
 
-                                <p>
-                                    <%= note.description %>
-                                </p>
-                                <% if(currUser) { %>
-                                    <a href="/<%= note.file %>" target="_blank" class="btn btn-primary ">
-                                        View PDF
-                                    </a>
-                                    <% } %>
+                            <i class="bi bi-upload me-2"></i> Upload New Notes
 
-                                        <form action="/notes/<%= note._id %>?_method=DELETE" method="POST">
+                        </a>
 
-                                            <button class="btn btn-danger">
-                                                Delete Note
-                                            </button>
+                    </div>
 
-                                        </form>
+                </div>
+
+            </div>
+
+            <div class="hero-shape-1"></div>
+            <div class="hero-shape-2"></div>
+
+        </section>
+        <!-- ================= SEARCH ================= -->
+
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+            <div class="card-body">
+
+                <form action="/notes" method="GET">
+
+                    <div class="row g-3">
+
+                        <div class="col-lg-5">
+
+                            <label class="fw-semibold mb-2">
+                        Search Notes
+                    </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text bg-white">
+
+                            <i class="bi bi-search"></i>
+
+                        </span>
+
+                                <input type="text" name="search" class="form-control" placeholder="Search by title, subject or description..." value="<%= search || '' %>">
+
                             </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <label class="fw-semibold mb-2">
+                        Subject
+                    </label>
+
+                            <select class="form-select" name="subject">
+
+                        <option value="">All Subjects</option>
+                        <option>Java</option>
+                        <option>Python</option>
+                        <option>DBMS</option>
+                        <option>Operating System</option>
+                        <option>Computer Networks</option>
+                        <option>Data Structures</option>
+
+                    </select>
+
+                        </div>
+
+                        <div class="col-lg-2">
+
+                            <label class="fw-semibold mb-2">
+                        Sort By
+                    </label>
+
+                            <select class="form-select" name="sort">
+
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+
+                    </select>
+
+                        </div>
+
+                        <div class="col-lg-2 d-grid">
+
+                            <label class="invisible">
+                        Search
+                    </label>
+
+                            <button class="btn btn-primary">
+
+                        <i class="bi bi-search me-2"></i>
+
+                        Search
+
+                    </button>
 
                         </div>
 
                     </div>
 
-                    <% }) %>
+                </form>
+
+            </div>
+
+        </div>
+
+
+
 
     </div>

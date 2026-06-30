@@ -116,3 +116,38 @@ iframe {
     border-radius: 25px;
     font-size: 14px;
 }
+
+.hero-section {
+    background: linear-gradient(135deg, #eef5ff, #ffffff);
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-shape-1 {
+    width: 250px;
+    height: 250px;
+    background: #dbe9ff;
+    border-radius: 50%;
+    position: absolute;
+    left: -100px;
+    bottom: -120px;
+}
+
+.hero-shape-2 {
+    width: 320px;
+    height: 320px;
+    background: #edf4ff;
+    border-radius: 50%;
+    position: absolute;
+    right: -120px;
+    top: -120px;
+}
+
+.hero-section h1 {
+    color: #0d1b2a;
+}
+
+.hero-section p {
+    color: #6c757d;
+}
