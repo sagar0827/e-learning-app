@@ -132,7 +132,155 @@
 
         </div>
 
+        <!-- ================= STATISTICS ================= -->
 
+        <div class="row g-4 mb-4">
+
+            <!-- Total Notes -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body d-flex align-items-center">
+
+                        <div class="stat-icon bg-primary-subtle text-primary">
+
+                            <i class="bi bi-journal-bookmark-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h2 class="fw-bold mb-0">
+
+                                <%= notes.length %>
+
+                            </h2>
+
+                            <small class="text-muted">
+
+                        Total Notes
+
+                    </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Approved -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body d-flex align-items-center">
+
+                        <div class="stat-icon bg-success-subtle text-success">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h2 class="fw-bold mb-0">
+
+                                <%= notes.filter(note=>note.status==="approved").length %>
+
+                            </h2>
+
+                            <small class="text-muted">
+
+                        Approved Notes
+
+                    </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Contributors -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body d-flex align-items-center">
+
+                        <div class="stat-icon bg-warning-subtle text-warning">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h2 class="fw-bold mb-0">
+
+                                <%= new Set(notes.map(note=>note.owner?._id?.toString())).size %>
+
+                            </h2>
+
+                            <small class="text-muted">
+
+                        Contributors
+
+                    </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Subjects -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body d-flex align-items-center">
+
+                        <div class="stat-icon bg-info-subtle text-info">
+
+                            <i class="bi bi-grid-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h2 class="fw-bold mb-0">
+
+                                <%= new Set(notes.map(note=>note.subject)).size %>
+
+                            </h2>
+
+                            <small class="text-muted">
+
+                        Subjects
+
+                    </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
     </div>
