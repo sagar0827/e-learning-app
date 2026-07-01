@@ -22,25 +22,63 @@ const upload = multer({ storage: storage });
 
 
 
-//show All Notes with Search
+
+//show All Notes with Search and pagination
 router.get("/", async(req, res) => {
 
-    let search = req.query.search || "";
+    const page = parseInt(req.query.page) || 1;
+    const limit = 4; // 4 notes per page
 
-    const notes = await Note.find({
-        title: {
+    const search = req.query.search || "";
+    const subject = req.query.subject || "";
+    const sort = req.query.sort || "newest";
+
+
+    const query = {
+        status: "approved",
+    };
+
+    if (search) {
+        query.title = {
             $regex: search,
             $options: "i"
-        },
-        status: "approved"
+        };
+    }
+
+    if (subject) {
+        query.subject = subject;
+    }
+
+    let sortOption = {};
+
+    if (sort === "newest") {
+        sortOption = { createdAt: -1 };
+    } else {
+        sortOption = { createdAt: 1 };
+    }
+
+    // Total notes
+    const totalNotes = await Note.countDocuments(query);
+
+
+    // Notes
+    const notes = await Note.find(query)
+        .populate("owner")
+        .sort(sortOption)
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+    res.render("notes", {
+        notes,
+        search,
+        subject,
+        sort,
+        currentPage: page,
+        totalPages: Math.ceil(totalNotes / limit)
     });
 
-    res.render(
-        "notes", { notes, search }
-    );
+
 });
-
-
 //my-notes route
 router.get("/my-notes", isLoggedIn, async(req, res) => {
     const notes = await Note.find({ owner: req.user._id });
