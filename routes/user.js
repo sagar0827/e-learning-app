@@ -8,6 +8,10 @@ router.get('/', (req, res) => {
     res.render("dashboard");
 });
 
+
+
+
+
 //  Register page
 router.get('/register', (req, res) => {
     res.render("register");

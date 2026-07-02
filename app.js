@@ -16,6 +16,7 @@ const methodOverride = require("method-override");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const noteRoutes = require("./routes/notes");
+const videoRoutes = require("./routes/video");
 
 
 
@@ -68,19 +69,22 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+
+    res.locals.currentPath = req.path;
     next();
 });
 
+app.get('/', (req, res) => {
+    res.render("dashboard");
+});
 
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/notes", noteRoutes);
+app.use("/videos",videoRoutes);
 app.use("/uploads", express.static("uploads"));
 
 
-app.get('/', (req, res) => {
-    res.render("home");
-});
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL).then(() => {

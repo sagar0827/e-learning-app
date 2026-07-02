@@ -1,9 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow-sm">
     <div class="container">
 
         <!-- Logo -->
-        <a class="navbar-brand fw-bold" href="/">
-            📘 LearnHub
+        <a class="navbar-brand d-flex align-items-center  fw-bold" href="/">
+ <div class="logo-icon me-2">
+    <i class="bi bi-journal-bookmark-fill"></i>
+ </div>
+ <div>
+    <span class="logo-text">
+        NoteVerse
+    </span>
+    <div class="logo-subtitle">
+        E-Learning
+    </div>
+</div>
         </a>
 
         <!-- Mobile Toggle -->
@@ -19,114 +29,196 @@
             <ul class="navbar-nav me-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">
-                        Dashboard
+                    <a class="nav-link <%= currentPath ==='/dashboard'? 'active-nav': '' %>" href="/dashboard">
+                        <i class="bi bi-house-door me-1"></i>
+                        Home
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/videos">
+                    <a class="nav-link <%= currentPath ==='/videos'? 'active-nav': '' %>" href="/videos">
+                        <i class="bi bi-play-circle me-1"></i>
                         Videos
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <% if( typeof currUser !=='undefined' && currUser ){ %>
-                        <a class="nav-link" href="/notes">
-                            Notes
+                        <a class="nav-link <%= currentPath ==='/notes'? 'active-nav': '' %>" href="/notes">
+                            <i class="bi bi-journal-text me-1"></i>
+                             Browse Notes
                         </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/notes/my-notes">
+                    <a class="nav-link <%= currentPath ==='/notes/my-notes'? 'active-nav': '' %>" href="/notes/my-notes">
+                        <i class="bi bi-folder2-open me-1"></i>
                         My Notes
                     </a>
                 </li>
 
                 <li class="nav-item">
 
-                    <a class="nav-link" href="/notes/upload">
+                    <a class="nav-link <%= currentPath ==='/notes/upload'? 'active-nav': '' %>"  href="/notes/upload">
+                       <i class="bi bi-cloud-upload me-1"></i>
                         Upload Notes
                     </a>
                     <% } %>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">
-                        Profile
-                    </a>
-                </li>
+                
 
             </ul>
 
-            <!-- Search Bar
-            <form class="d-flex me-3">
 
-                <input class="form-control" type="search" placeholder="Search Notes">
+<!-- Login/logout Dropdown -->
+<ul class="navbar-nav align-items-center">
 
-            </form>
 
-            <!-- Right Buttons -->
-            <!-- <div class="d-flex gap-2">
-                <% if(!currUser) { %>
-                    <a href="/login" class="btn btn-outline-light">
-                        Login
-                    </a>
+<% if(currUser){ %>
 
-                    <a href="/register" class="btn btn-primary">
-                        Register
-                    </a>
-                    <%} else { %>
-                        <span class="text-light mt-2">
-                            Welcome <%=currUser.username %>
-                        </span>
-                        <a href="/logout" class="btn btn-danger">
-                            Logout
-                        </a>
-                        <%} %>
+    <% if(currUser.role==="admin"){ %>
 
-            </div> -->
-            <ul class="navbar-nav">
+        <li class="nav-item me-3">
 
-                <% if(currUser){ %>
+            <a class="btn btn-warning rounded-pill px-3"
+               href="/admin/dashboard">
 
-                    <% if(currUser.role==="admin" ){ %>
+                Admin
 
-                        <li class="nav-item">
-                            <a class="nav-link text-warning" href="/admin/dashboard">
-                                Admin Dashboard
-                            </a>
-                        </li>
+            </a>
 
-                        <% } %>
+        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" href="/logout">
-                                    Logout
-                                </a>
-                            </li>
+    <% } %>
 
-                            <% } else { %>
+<!-- Notification bell +dark mode  -->
+    <li class="nav-item me-3">
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/login">
-                                        Login
-                                    </a>
-                                </li>
+    <a href="#" class="nav-link position-relative">
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/register">
-                                        Register
-                                    </a>
-                                </li>
+        <i class="bi bi-bell-fill fs-5 text-white"></i>
 
-                                <% } %>
+        <span class="notification-dot"></span>
 
-            </ul>
+    </a>
 
-            <button onclick="toggleTheme()" class="btn btn-warning">
-                Dark Mode
-            </button>
+</li>
+
+<li class="nav-item me-3">
+
+    <button class="btn theme-btn" onclick="toggleTheme()">
+
+        <i class="bi bi-moon-stars-fill"></i>
+
+    </button>
+
+</li>
+<!--  -->
+
+    <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle d-flex align-items-center"
+
+           href="#"
+
+           role="button"
+
+           data-bs-toggle="dropdown">
+
+            <div class="user-avatar me-2">
+
+                <%= currUser.username.charAt(0).toUpperCase() %>
+
+            </div>
+
+            <span class="text-white">
+
+                <%= currUser.username %>
+
+            </span>
+
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4">
+
+            <li>
+
+                <a class="dropdown-item" href="/dashboard">
+
+                    🏠 Dashboard
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="dropdown-item" href="/notes/my-notes">
+
+                    📄 My Notes
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="dropdown-item" href="/profile">
+
+                    👤 Profile
+
+                </a>
+
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+
+                <a class="dropdown-item text-danger"
+
+                   href="/logout">
+
+                    🚪 Logout
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li>
+
+<% } else { %>
+
+<li class="nav-item">
+
+<a href="/login"
+
+class="btn btn-outline-light rounded-pill me-2">
+
+Login
+
+</a>
+
+</li>
+
+<li class="nav-item">
+
+<a href="/register"
+
+class="btn btn-primary rounded-pill">
+
+Register
+
+</a>
+
+</li>
+
+<% } %>
+
+</ul>
 
         </div>
     </div>

@@ -157,15 +157,15 @@ router.post(
 
 
 
-router.get("/:id", async(req, res) => {
-    const note =
-        await Note.findById(req.params.id).populate("owner");
-    if (!note) {
-        req.flash("error", "Note not found!");
-        return res.redirect("/notes");
-    }
-    res.render("videos", { note });
-});
+// router.get("/", async(req, res) => {
+//     const note =
+//         await Note.findById(req.params.id).populate("owner");
+//     if (!note) {
+//         req.flash("error", "Note not found!");
+//         return res.redirect("/notes");
+//     }
+//     res.render("videos", { note });
+// });
 
 // Edit Note Page
 router.get("/:id/edit", isLoggedIn, isOwner, async(req, res) => {
@@ -263,7 +263,6 @@ router.put(
 
     }
 );
-
 
 // DELETE NOTES
 router.delete("/:id", isLoggedIn, isOwner, async(req, res) => {
